@@ -1,0 +1,16 @@
+﻿@model CsharpImageCompression.Models.FileUploadViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<hr>
+
+<div class="row">
+    <div class="container">
+        <div class="form-group">
+            <form asp-action="Index" method="post" role="form" enctype="multipart/form-data">
+                <input asp-for="FormFile" type="file" class="form-control" />
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+</div>
