@@ -21,7 +21,7 @@ namespace CsharpImageCompression.Controllers
             {
                 var imageProcessor = new MagicNetHelper();
                 var intialCompressedBytes = imageProcessor.Compress(viewModel.FormFile);
-                var resizedBytes = imageProcessor.Resize(intialCompressedBytes, 765, 0);
+                var resizedBytes = imageProcessor.Resize(imageBytes: intialCompressedBytes, width: 765, height: 0);
 
                 const string basePath = "C:\\Projects\\CsharpImageCompression\\OutputImages\\";
                 imageProcessor.SaveImageFile(imageBytes: resizedBytes, 
@@ -34,9 +34,6 @@ namespace CsharpImageCompression.Controllers
         public IActionResult Privacy() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        public IActionResult Error() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
