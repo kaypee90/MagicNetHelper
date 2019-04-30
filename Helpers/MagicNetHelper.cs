@@ -18,15 +18,15 @@
         /// <returns>Compressed Image Byte Array</returns>
         public byte[] Compress(IFormFile formFile)
         {
-            byte[] photoBytes;
+            byte[] imageBytes;
             // Read a file and resize it.
             using(var stream = new MemoryStream())
             {
                 formFile.CopyTo(stream);
-                photoBytes = stream.ToArray();
+                imageBytes = stream.ToArray();
             }
 
-            return Compress(photoBytes);
+            return Compress(uncompressedBytes: imageBytes);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@
                 if(optimizer.IsSupported(ms) && optimizer.Compress(ms))
                 {
                     optimizer.LosslessCompress(ms);
-                     var compressedBytes = ms.ToArray();
+                    var compressedBytes = ms.ToArray();
                     Console.WriteLine($"Magic net Compressed Filesize: {compressedBytes.Length}");
                     return compressedBytes;
                 }    
@@ -56,6 +56,12 @@
             }
         }
 
+        /// <summary>
+        /// Resize images of different file formats
+        /// </summary>
+        /// <param name="imageBytes">Original Image byte array</param>
+        /// <returns>Resized Image Byte Array</returns>
+
         public byte[] Resize(byte[] imageBytes, int width, int height = 0)
         {
             var image = new MagickImage(imageBytes);
@@ -63,6 +69,12 @@
             return image.ToByteArray();
         }
 
+        /// <summary>
+        /// Save image from bytes to filesytem
+        /// </summary>
+        /// <param name="imageBytes">Image byte array</param>
+        /// <param name="location">location on filesytem to save file</param>
+        /// <returns>A boolean whether the processs got completed</returns>
         public bool SaveImageFile(byte[] imageBytes, string location)
         {
             var hasCompletedSaving = false;
