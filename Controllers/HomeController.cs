@@ -22,9 +22,10 @@ namespace CsharpImageCompression.Controllers
                 var imageProcessor = new MagicNetHelper();
                 var intialCompressedBytes = imageProcessor.Compress(viewModel.FormFile);
                 var resizedBytes = imageProcessor.Resize(intialCompressedBytes, 765, 0);
-                
+
+                const string basePath = "C:\\Projects\\CsharpImageCompression\\OutputImages\\";
                 imageProcessor.SaveImageFile(imageBytes: resizedBytes, 
-                                            location: "C:\\Projects\\CsharpImageCompression\\OutputImages\\" + viewModel.FormFile.FileName);
+                                            location: basePath + viewModel.FormFile.FileName);
             }
 
             return View(viewModel);
